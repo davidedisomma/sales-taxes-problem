@@ -3,12 +3,11 @@
  */
 package org.ucieffe.kata.salestaxes;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.math.BigDecimal;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public class SalesTaxes {
+
+    public BigDecimal calculateTotal() {
+        return new BigDecimal("0.00");
     }
 }

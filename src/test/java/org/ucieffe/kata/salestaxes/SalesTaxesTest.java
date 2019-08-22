@@ -4,11 +4,18 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.junit.Test;
+
+import java.math.BigDecimal;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+public class SalesTaxesTest {
+
+    @Test
+    public void return_zero_when_no_item() {
+        SalesTaxes salesTaxes = new SalesTaxes();
+
+        assertThat(new BigDecimal("0.00"), is(salesTaxes.calculateTotal()));
     }
 }
