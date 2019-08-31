@@ -18,11 +18,12 @@ public class Calculator {
         items = new ArrayList<>();
     }
 
-    public BigDecimal calculateTotal() {
-        return items.stream()
+    public Report calculateTotal(List<Item> items) {
+        BigDecimal total = this.items.stream()
                 .map(Item::getPrice)
-                .collect(reducing((i1,i2) -> i1.add(i2)))
+                .collect(reducing((i1, i2) -> i1.add(i2)))
                 .orElse(new BigDecimal("0.00"));
+        return new Report(items, new BigDecimal("0.00"), total);
     }
 
     public void add(Item item) {

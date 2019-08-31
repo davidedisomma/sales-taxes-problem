@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -22,14 +24,14 @@ public class CalculatorTest {
 
     @Test
     public void return_zero_when_no_item() {
-        assertThat(new BigDecimal("0.00"), is(calculator.calculateTotal()));
+        assertThat(new BigDecimal("0.00"), is(calculator.calculateTotal(emptyList()).getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
         calculator.add(new Item("1.10"));
 
-        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal()));
+        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(emptyList()).getTotal()));
     }
 
     @Test
@@ -38,7 +40,7 @@ public class CalculatorTest {
         calculator.add(new Item("2.20"));
         calculator.add(new Item("3.30"));
 
-        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal()));
+        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(emptyList()).getTotal()));
     }
 
 }
