@@ -4,19 +4,28 @@
 package org.ucieffe.kata.salestaxes;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.reducing;
 
 public class Calculator {
 
-    private final Item item;
+    private Item item;
+    private final List<Item> items;
 
-    public Calculator(Item item) {
-        this.item = item;
+    public Calculator() {
+        items = new ArrayList<>();
     }
 
     public BigDecimal calculateTotal() {
-        if(item == null)
-            return new BigDecimal("0.00");
-        return item.getPrice();
+        return items.stream()
+                .map(Item::getPrice)
+                .collect(reducing((i1,i2) -> i1.add(i2)))
+                .orElse(new BigDecimal("0.00"));
     }
 
+    public void add(Item item) {
+        this.items.add(item);
+    }
 }
