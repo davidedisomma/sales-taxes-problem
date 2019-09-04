@@ -2,6 +2,8 @@ package org.ucieffe.kata.salestaxes;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.Report;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

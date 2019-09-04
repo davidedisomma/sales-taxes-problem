@@ -1,4 +1,4 @@
-package org.ucieffe.kata.salestaxes;
+package org.ucieffe.kata.salestaxes.model;
 
 import java.math.BigDecimal;
 import java.util.List;

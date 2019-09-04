@@ -3,6 +3,9 @@
  */
 package org.ucieffe.kata.salestaxes;
 
+import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.Report;
+
 import java.math.BigDecimal;
 import java.util.List;
 

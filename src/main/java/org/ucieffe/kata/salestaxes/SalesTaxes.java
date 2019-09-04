@@ -1,5 +1,8 @@
 package org.ucieffe.kata.salestaxes;
 
+import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.Report;
+
 import java.util.List;
 
 public class SalesTaxes {
