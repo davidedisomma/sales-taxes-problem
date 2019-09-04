@@ -7,11 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class CalculatorTest {
 
@@ -29,18 +31,18 @@ public class CalculatorTest {
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        calculator.add(new Item("1.10"));
-
-        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(emptyList()).getTotal()));
+        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(asList(new Item("1.10"))).getTotal()));
     }
 
     @Test
     public void return_sum_price_when_add_more_than_one_item_with_exemption() {
-        calculator.add(new Item("1.10"));
-        calculator.add(new Item("2.20"));
-        calculator.add(new Item("3.30"));
+        List<Item> itemList = asList(
+                new Item("1.10"),
+                new Item("2.20"),
+                new Item("3.30")
+        );
 
-        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(emptyList()).getTotal()));
+        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(itemList).getTotal()));
     }
 
 }
