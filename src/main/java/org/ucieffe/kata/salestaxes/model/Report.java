@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Report {
 
-    private final List<Item> items;
     private final BigDecimal salesTaxes;
     private final BigDecimal total;
+    private final Basket basket;
 
-    public Report(List<Item> items, BigDecimal salesTaxes, BigDecimal total) {
-        this.items = items;
+    public Report(Basket basket, BigDecimal salesTaxes, BigDecimal total) {
+        this.basket = basket;
         this.salesTaxes = salesTaxes;
         this.total = total;
     }
 
     public List<Item> getItems() {
-        return items;
+        return basket.getItemList();
     }
 
     public BigDecimal getSalesTaxes() {

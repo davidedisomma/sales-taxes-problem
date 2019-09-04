@@ -3,22 +3,22 @@
  */
 package org.ucieffe.kata.salestaxes;
 
+import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 import org.ucieffe.kata.salestaxes.model.Report;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static java.util.stream.Collectors.reducing;
 
 public class Calculator {
 
 
-    public Report calculateTotal(List<Item> items) {
-        BigDecimal total = items.stream()
+    public Report calculateTotal(Basket basket) {
+        BigDecimal total = basket.getItemList().stream()
                 .map(Item::getPrice)
                 .collect(reducing((i1, i2) -> i1.add(i2)))
                 .orElse(new BigDecimal("0.00"));
-        return new Report(items, new BigDecimal("0.00"), total);
+        return new Report(basket, new BigDecimal("0.00"), total);
     }
 }

@@ -1,9 +1,7 @@
 package org.ucieffe.kata.salestaxes;
 
-import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Report;
-
-import java.util.List;
 
 public class SalesTaxes {
     private final InputParser inputParser;
@@ -18,8 +16,8 @@ public class SalesTaxes {
     }
 
     public String execute(String input) {
-        List<Item> items = inputParser.run(input);
-        Report report = calculator.calculateTotal(items);
+        Basket basket = inputParser.run(input);
+        Report report = calculator.calculateTotal(basket);
 
         return deserializer.run(report);
     }

@@ -5,13 +5,12 @@ package org.ucieffe.kata.salestaxes;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -26,23 +25,26 @@ public class CalculatorTest {
 
     @Test
     public void return_zero_when_no_item() {
-        assertThat(new BigDecimal("0.00"), is(calculator.calculateTotal(emptyList()).getTotal()));
+        assertThat(new BigDecimal("0.00"), is(calculator.calculateTotal(basketWith()).getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(asList(new Item("1.10"))).getTotal()));
+        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(basketWith(new Item("1.10"))).getTotal()));
     }
 
     @Test
     public void return_sum_price_when_add_more_than_one_item_with_exemption() {
-        List<Item> itemList = asList(
+        Basket basketWithMultipleItems = basketWith(
                 new Item("1.10"),
                 new Item("2.20"),
                 new Item("3.30")
         );
+        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(basketWithMultipleItems).getTotal()));
+    }
 
-        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(itemList).getTotal()));
+    private Basket basketWith(Item...items) {
+        return new Basket(asList(items));
     }
 
 }

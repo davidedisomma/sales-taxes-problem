@@ -2,6 +2,7 @@ package org.ucieffe.kata.salestaxes;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 import org.ucieffe.kata.salestaxes.model.Report;
 
@@ -24,7 +25,8 @@ public class SalesTaxesTest {
 
     public static final String ANY_INPUT = "any_input";
     public static final List<Item> ANY_LIST_OF_ITEMS = Arrays.asList(new Item("0.01"));
-    public static final Report ANY_REPORT = new Report(ANY_LIST_OF_ITEMS, BigDecimal.ONE, BigDecimal.TEN);
+    public static final Basket ANY_BASKET = new Basket(ANY_LIST_OF_ITEMS);
+    public static final Report ANY_REPORT = new Report(ANY_BASKET, BigDecimal.ONE, BigDecimal.TEN);
 
     @Before
     public void setUp() {
@@ -34,8 +36,8 @@ public class SalesTaxesTest {
     @Test
     public void should_convert_result_in_a_string() {
         when(inputParser.run(ANY_INPUT))
-                .thenReturn(ANY_LIST_OF_ITEMS);
-        when(calculator.calculateTotal(ANY_LIST_OF_ITEMS))
+                .thenReturn(ANY_BASKET);
+        when(calculator.calculateTotal(ANY_BASKET))
                 .thenReturn(ANY_REPORT);
 
         salesTaxes.execute(ANY_INPUT);
