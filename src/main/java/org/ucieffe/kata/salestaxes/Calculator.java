@@ -17,6 +17,7 @@ public class Calculator {
     public Report calculateTotal(Basket basket) {
         BigDecimal total = basket.getItemList().stream()
                 .map(Item::getPrice)
+                .map(BigDecimal::new)
                 .collect(reducing((i1, i2) -> i1.add(i2)))
                 .orElse(new BigDecimal("0.00"));
         return new Report(basket, new BigDecimal("0.00"), total);

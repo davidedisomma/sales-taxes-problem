@@ -1,8 +1,11 @@
 package org.ucieffe.kata.salestaxes.model;
 
-import com.google.common.collect.ImmutableList;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class Basket {
 
@@ -12,7 +15,17 @@ public class Basket {
         this.itemList = itemList;
     }
 
+    public Basket(Item...items) {
+        itemList = new ArrayList<>();
+        itemList.addAll(asList(items));
+    }
+
     public List<Item> getItemList() {
-        return ImmutableList.copyOf(itemList);
+        return Collections.unmodifiableList(itemList);
+    }
+
+    public Basket add(Item item) {
+        itemList.add(item);
+        return this;
     }
 }
