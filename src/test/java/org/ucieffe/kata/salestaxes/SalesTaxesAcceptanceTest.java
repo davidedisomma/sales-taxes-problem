@@ -12,7 +12,7 @@ public class SalesTaxesAcceptanceTest {
     private SalesTaxes salesTaxes;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         salesTaxes = new SalesTaxes(null, null, null);
     }
 

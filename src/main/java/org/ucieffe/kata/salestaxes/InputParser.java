@@ -3,6 +3,9 @@ package org.ucieffe.kata.salestaxes;
 import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class InputParser {
 
     private static final String SPACE = " ";
@@ -13,11 +16,17 @@ public class InputParser {
         if(input.isEmpty())
             return basket;
 
-        basket.add(createItem(input));
+        lines(input).stream()
+                .map(this::item)
+                .forEach(basket::add);
         return basket;
     }
 
-    private Item createItem(String input) {
+    private List<String> lines(String input) {
+        return Arrays.asList(input.split("\\n"));
+    }
+
+    private Item item(String input) {
         String quantity = getQuantityFrom(input);
         String type = getTypeFrom(input);
         String price = getPriceFrom(input);
