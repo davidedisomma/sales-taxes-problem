@@ -23,6 +23,10 @@ public class Item {
         return price;
     }
 
+    public String getTotalPrice() {
+        return new BigDecimal(price).multiply(new BigDecimal(quantity)).toString();
+    }
+
     public String getQuantity() {
         return quantity;
     }

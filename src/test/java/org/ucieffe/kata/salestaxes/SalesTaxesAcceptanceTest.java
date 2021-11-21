@@ -13,7 +13,7 @@ public class SalesTaxesAcceptanceTest {
 
     @Before
     public void setUp() {
-        salesTaxes = new SalesTaxes(null, null, null);
+        salesTaxes = new SalesTaxes(new InputParser(), new Calculator(), new Deserializer());
     }
 
     @Test
