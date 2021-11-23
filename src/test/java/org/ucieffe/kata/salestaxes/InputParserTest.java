@@ -19,13 +19,13 @@ public class InputParserTest {
     }
 
     @Test
-    public void returnBasketWithOneKindOfItem() {
+    public void returnBasketWithOneKindOfNoTaxedItem() {
         InputParser inputParser = new InputParser();
 
         Basket basket = inputParser.run("2 book at 12.49");
 
         assertThat(basket.getItemList().size(), is(1));
-        assertThat(basket.getItemList().get(0), is(new Item("2", "12.49", "book")));
+        assertThat(basket.getItemList().get(0), is(new Item("2", "12.49", "book", false)));
     }
 
     @Test
@@ -39,9 +39,9 @@ public class InputParserTest {
 
         assertThat(basket.getItemList().size(), is(3));
         assertThat(basket.getItemList(), contains(
-                new Item("2", "12.49", "book"),
-                new Item("1", "14.99", "music CD"),
-                new Item("1", "0.85", "chocolate bar"))
+                new Item("2", "12.49", "book", false),
+                new Item("1", "14.99", "music CD", true),
+                new Item("1", "0.85", "chocolate bar", false))
         );
     }
 }

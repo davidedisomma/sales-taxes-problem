@@ -16,7 +16,7 @@ public class Deserializer {
     }
 
     private void appendItem(StringBuilder result, final Item item) {
-        result.append(item.getQuantity()).append(" ").append(item.getType()).append(": ").append(item.getTotalPrice()).append(CARRIAGE_RETURN);
+        result.append(item.getQuantity()).append(" ").append(item.getDescription()).append(": ").append(item.getTotalPrice()).append(CARRIAGE_RETURN);
     }
 
     private void appendTotal(StringBuilder result, Report report) {

@@ -7,16 +7,14 @@ import java.util.StringJoiner;
 public class Item {
     private final String quantity;
     private final String price;
-    private final String type;
+    private final String description;
+    private boolean isTaxed;
 
-    public Item(String quantity, String price, String type) {
+    public Item(String quantity, String price, String description, boolean isTaxed) {
         this.quantity = quantity;
         this.price = price;
-        this.type = type;
-    }
-
-    public Item(String price) {
-        this("1", price, "");
+        this.description = description;
+        this.isTaxed = isTaxed;
     }
 
     public String getPrice() {
@@ -31,8 +29,8 @@ public class Item {
         return quantity;
     }
 
-    public String getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -42,12 +40,12 @@ public class Item {
         Item item = (Item) o;
         return Objects.equals(quantity, item.quantity) &&
                 Objects.equals(price, item.price) &&
-                Objects.equals(type, item.type);
+                Objects.equals(description, item.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(quantity, price, type);
+        return Objects.hash(quantity, price, description);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class Item {
         return new StringJoiner(", ", Item.class.getSimpleName() + "[", "]")
                 .add("quantity='" + quantity + "'")
                 .add("price='" + price + "'")
-                .add("type='" + type + "'")
+                .add("description='" + description + "'")
                 .toString();
     }
 }

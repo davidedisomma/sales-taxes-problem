@@ -24,7 +24,7 @@ public class SalesTaxesTest {
     private SalesTaxes salesTaxes;
 
     public static final String ANY_INPUT = "any_input";
-    public static final List<Item> ANY_LIST_OF_ITEMS = Arrays.asList(new Item("0.01"));
+    public static final List<Item> ANY_LIST_OF_ITEMS = Arrays.asList(new Item("2", "12.49", "0.01", false));
     public static final Basket ANY_BASKET = new Basket(ANY_LIST_OF_ITEMS);
     public static final Report ANY_REPORT = new Report(ANY_BASKET, BigDecimal.ONE, BigDecimal.TEN);
 

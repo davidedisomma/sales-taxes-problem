@@ -19,7 +19,7 @@ public class CalculatorTest {
     private Calculator calculator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         calculator = new Calculator();
     }
 
@@ -30,15 +30,19 @@ public class CalculatorTest {
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(basketWith(new Item("1.10"))).getTotal()));
+        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(basketWith(anExemptedItem("1.10"))).getTotal()));
+    }
+
+    private Item anExemptedItem(String price) {
+        return new Item("1", price, "any", false);
     }
 
     @Test
     public void return_sum_price_when_add_more_than_one_item_with_exemption() {
         Basket basketWithMultipleItems = basketWith(
-                new Item("1.10"),
-                new Item("2.20"),
-                new Item("3.30")
+                anExemptedItem("1.10"),
+                anExemptedItem("2.20"),
+                anExemptedItem("3.30")
         );
         assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(basketWithMultipleItems).getTotal()));
     }

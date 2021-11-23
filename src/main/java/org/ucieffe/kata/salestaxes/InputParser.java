@@ -2,6 +2,7 @@ package org.ucieffe.kata.salestaxes;
 
 import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.ItemFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,7 @@ public class InputParser {
     private static final String AT = " at ";
 
     public Basket run(String input) {
-        Basket basket = new Basket();
+        Basket basket = emptyBasket();
         if(input.isEmpty())
             return basket;
 
@@ -20,6 +21,10 @@ public class InputParser {
                 .map(this::item)
                 .forEach(basket::add);
         return basket;
+    }
+
+    private Basket emptyBasket() {
+        return new Basket();
     }
 
     private List<String> lines(String input) {
@@ -30,7 +35,7 @@ public class InputParser {
         String quantity = getQuantityFrom(input);
         String type = getTypeFrom(input);
         String price = getPriceFrom(input);
-        return new Item(quantity, price, type);
+        return ItemFactory.createItemFrom(quantity, price, type);
     }
 
     private String getPriceFrom(String input) {
