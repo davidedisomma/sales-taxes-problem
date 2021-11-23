@@ -28,4 +28,12 @@ public class Basket {
         itemList.add(item);
         return this;
     }
+
+    public Integer size() {
+        return itemList.size();
+    }
+
+    public Boolean isEmpty() {
+        return itemList.isEmpty();
+    }
 }

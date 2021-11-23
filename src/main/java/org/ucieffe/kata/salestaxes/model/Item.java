@@ -8,7 +8,7 @@ public class Item {
     private final String quantity;
     private final String price;
     private final String description;
-    private boolean isTaxed;
+    private final boolean isTaxed;
 
     public Item(String quantity, String price, String description, boolean isTaxed) {
         this.quantity = quantity;
@@ -38,22 +38,21 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(quantity, item.quantity) &&
-                Objects.equals(price, item.price) &&
-                Objects.equals(description, item.description);
+        return isTaxed == item.isTaxed && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(description, item.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(quantity, price, description);
+        return Objects.hash(quantity, price, description, isTaxed);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Item.class.getSimpleName() + "[", "]")
-                .add("quantity='" + quantity + "'")
-                .add("price='" + price + "'")
-                .add("description='" + description + "'")
-                .toString();
+        return "Item{" +
+                "quantity='" + quantity + '\'' +
+                ", price='" + price + '\'' +
+                ", description='" + description + '\'' +
+                ", isTaxed=" + isTaxed +
+                '}';
     }
 }

@@ -15,7 +15,7 @@ public class InputParserTest {
         InputParser inputParser = new InputParser();
         Basket basket = inputParser.run("");
 
-        assertTrue(basket.getItemList().isEmpty());
+        assertTrue(basket.isEmpty());
     }
 
     @Test
@@ -24,8 +24,18 @@ public class InputParserTest {
 
         Basket basket = inputParser.run("2 book at 12.49");
 
-        assertThat(basket.getItemList().size(), is(1));
+        assertThat(basket.size(), is(1));
         assertThat(basket.getItemList().get(0), is(new Item("2", "12.49", "book", false)));
+    }
+
+    @Test
+    public void returnBasketWithOneKindOfTaxedItem() {
+        InputParser inputParser = new InputParser();
+
+        Basket basket = inputParser.run("1 music CD at 14.99");
+
+        assertThat(basket.size(), is(1));
+        assertThat(basket.getItemList().get(0), is(new Item("1", "14.99", "music CD", true)));
     }
 
     @Test
@@ -37,7 +47,7 @@ public class InputParserTest {
 
         Basket basket = inputParser.run(input);
 
-        assertThat(basket.getItemList().size(), is(3));
+        assertThat(basket.size(), is(3));
         assertThat(basket.getItemList(), contains(
                 new Item("2", "12.49", "book", false),
                 new Item("1", "14.99", "music CD", true),
