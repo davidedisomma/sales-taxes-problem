@@ -18,11 +18,28 @@ public class Item {
     }
 
     public String getPrice() {
-        return price;
+        BigDecimal price = new BigDecimal(this.price);
+        BigDecimal taxes = new BigDecimal(getUnitPrice());
+        price = price.add(taxes).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        return price.toString();
+    }
+
+    private String getUnitPrice() {
+        BigDecimal price = new BigDecimal(this.price);
+        BigDecimal taxes = BigDecimal.ZERO;
+        if(isTaxed) {
+            taxes = price.multiply(new BigDecimal(0.1)).setScale(2, BigDecimal.ROUND_HALF_UP);
+        }
+        return taxes.toString();
     }
 
     public String getTotalPrice() {
-        return new BigDecimal(price).multiply(new BigDecimal(quantity)).toString();
+        return new BigDecimal(getPrice()).multiply(new BigDecimal(quantity)).toString();
+    }
+
+    public String getTotalTaxes() {
+        return new BigDecimal(getUnitPrice()).multiply(new BigDecimal(quantity)).toString();
     }
 
     public String getQuantity() {

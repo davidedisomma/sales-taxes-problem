@@ -17,7 +17,6 @@ public class SalesTaxesAcceptanceTest {
     }
 
     @Test
-    @Ignore
     public void input1() {
         String input = "2 book at 12.49\n" +
                 "1 music CD at 14.99\n" +

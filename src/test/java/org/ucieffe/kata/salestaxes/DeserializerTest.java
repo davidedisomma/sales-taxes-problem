@@ -29,7 +29,7 @@ public class DeserializerTest {
         Deserializer deserializer = new Deserializer();
 
         Basket basket = new Basket();
-        basket.add(new Item("1", "16.49", "music CD", true));
+        basket.add(new Item("1", "14.99", "music CD", true));
         String output = deserializer.run(new Report(basket, new BigDecimal("1.50"), new BigDecimal("16.49")));
 
         String expected =
@@ -45,7 +45,7 @@ public class DeserializerTest {
 
         Basket basket = new Basket();
         basket.add(new Item("2", "12.49", "book", false));
-        basket.add(new Item("1", "16.49", "music CD", true));
+        basket.add(new Item("1", "14.99", "music CD", true));
         basket.add(new Item("1", "0.85", "chocolate bar", false));
         String output = deserializer.run(new Report(basket, new BigDecimal("1.50"), new BigDecimal("42.32")));
 

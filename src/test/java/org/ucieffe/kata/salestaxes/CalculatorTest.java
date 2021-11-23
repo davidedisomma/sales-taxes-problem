@@ -33,8 +33,17 @@ public class CalculatorTest {
         assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(basketWith(anExemptedItem("1.10"))).getTotal()));
     }
 
+    @Test
+    public void return_item_price_when_add_one_item_with_tax() {
+        assertThat(new BigDecimal("1.21"), is(calculator.calculateTotal(basketWith(aTaxedItem("1.10"))).getTotal()));
+    }
+
     private Item anExemptedItem(String price) {
         return new Item("1", price, "any", false);
+    }
+
+    private Item aTaxedItem(String price) {
+        return new Item("1", price, "any", true);
     }
 
     @Test
