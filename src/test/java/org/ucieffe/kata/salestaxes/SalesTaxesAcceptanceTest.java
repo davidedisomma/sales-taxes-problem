@@ -1,7 +1,6 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +12,7 @@ public class SalesTaxesAcceptanceTest {
 
     @Before
     public void setUp() {
-        salesTaxes = new SalesTaxes(new InputParser(), new Calculator(), new Deserializer());
+        salesTaxes = new SalesTaxes(new InputParser(), new Deserializer());
     }
 
     @Test

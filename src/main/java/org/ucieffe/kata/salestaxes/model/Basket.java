@@ -1,6 +1,7 @@
 package org.ucieffe.kata.salestaxes.model;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,26 @@ public class Basket {
     public Basket add(Item item) {
         itemList.add(item);
         return this;
+    }
+
+    public Report calculateTotal() {
+        BigDecimal total = calculateGrossPrice();
+        BigDecimal taxes = calculateTaxesPrice();
+        return new Report(itemList, taxes, total);
+    }
+
+    public BigDecimal calculateTaxesPrice() {
+        return itemList.stream()
+                .map(Item::getTotalTaxes)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal("0.00"));
+    }
+
+    public BigDecimal calculateGrossPrice() {
+        return itemList.stream()
+                    .map(Item::getTotalPrice)
+                    .reduce(BigDecimal::add)
+                    .orElse(new BigDecimal("0.00"));
     }
 
     public Integer size() {

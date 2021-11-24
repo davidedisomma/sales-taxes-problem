@@ -14,28 +14,21 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CalculatorTest {
-
-    private Calculator calculator;
-
-    @Before
-    public void setUp() {
-        calculator = new Calculator();
-    }
+public class BasketTest {
 
     @Test
     public void return_zero_when_no_item() {
-        assertThat(new BigDecimal("0.00"), is(calculator.calculateTotal(basketWith()).getTotal()));
+        assertThat(new BigDecimal("0.00"), is(basketWith().calculateTotal().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        assertThat(new BigDecimal("1.10"), is(calculator.calculateTotal(basketWith(anExemptedItem("1.10"))).getTotal()));
+        assertThat(new BigDecimal("1.10"), is(basketWith(anExemptedItem("1.10")).calculateTotal().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_tax() {
-        assertThat(new BigDecimal("1.21"), is(calculator.calculateTotal(basketWith(aTaxedItem("1.10"))).getTotal()));
+        assertThat(new BigDecimal("1.21"), is(basketWith(aTaxedItem("1.10")).calculateTotal().getTotal()));
     }
 
     private Item anExemptedItem(String price) {
@@ -53,7 +46,7 @@ public class CalculatorTest {
                 anExemptedItem("2.20"),
                 anExemptedItem("3.30")
         );
-        assertThat(new BigDecimal("6.60"), is(calculator.calculateTotal(basketWithMultipleItems).getTotal()));
+        assertThat(new BigDecimal("6.60"), is(basketWithMultipleItems.calculateTotal().getTotal()));
     }
 
     private Basket basketWith(Item...items) {

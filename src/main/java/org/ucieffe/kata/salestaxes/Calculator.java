@@ -21,6 +21,6 @@ public class Calculator {
         BigDecimal taxes = basket.getItemList().stream()
                 .map(Item::getTotalTaxes).reduce(BigDecimal::add)
                 .orElse(new BigDecimal("0.00"));
-        return new Report(basket, taxes, total);
+        return new Report(basket.getItemList(), taxes, total);
     }
 }
