@@ -1,5 +1,7 @@
 package org.ucieffe.kata.salestaxes.model;
 
+import java.math.BigDecimal;
+
 public class ItemFactory {
 
     public static Item createItemFrom(String quantity, String price, String description) {
@@ -10,6 +12,6 @@ public class ItemFactory {
                 isTaxed = false;
                 break;
         }
-        return new Item(quantity, price, description, isTaxed);
+        return new Item(new Integer(quantity), new BigDecimal(price), description, isTaxed);
     }
 }

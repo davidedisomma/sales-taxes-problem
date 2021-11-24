@@ -39,11 +39,11 @@ public class CalculatorTest {
     }
 
     private Item anExemptedItem(String price) {
-        return new Item("1", price, "any", false);
+        return new Item(1, new BigDecimal(price), "any", false);
     }
 
     private Item aTaxedItem(String price) {
-        return new Item("1", price, "any", true);
+        return new Item(1, new BigDecimal(price), "any", true);
     }
 
     @Test

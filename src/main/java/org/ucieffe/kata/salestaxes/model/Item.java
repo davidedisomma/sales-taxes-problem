@@ -1,48 +1,46 @@
 package org.ucieffe.kata.salestaxes.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 public class Item {
-    private final String quantity;
-    private final String price;
+    private static final BigDecimal TAX_PERCENTAGE = new BigDecimal("0.1");
+    private final Integer quantity;
+    private final BigDecimal rawPrice;
     private final String description;
     private final boolean isTaxed;
 
-    public Item(String quantity, String price, String description, boolean isTaxed) {
+    public Item(Integer quantity, BigDecimal rawPrice, String description, boolean isTaxed) {
         this.quantity = quantity;
-        this.price = price;
+        this.rawPrice = rawPrice;
         this.description = description;
         this.isTaxed = isTaxed;
     }
 
-    public String getPrice() {
-        BigDecimal price = new BigDecimal(this.price);
-        BigDecimal taxes = new BigDecimal(getUnitPrice());
-        price = price.add(taxes).setScale(2, BigDecimal.ROUND_HALF_UP);
+    public BigDecimal getGrossUnitPrice() {
+        BigDecimal taxes = getTaxesUnitPrice();
 
-        return price.toString();
+        return this.rawPrice.add(taxes).setScale(2, RoundingMode.HALF_UP);
+
     }
 
-    private String getUnitPrice() {
-        BigDecimal price = new BigDecimal(this.price);
-        BigDecimal taxes = BigDecimal.ZERO;
+    private BigDecimal getTaxesUnitPrice() {
         if(isTaxed) {
-            taxes = price.multiply(new BigDecimal(0.1)).setScale(2, BigDecimal.ROUND_HALF_UP);
+            return rawPrice.multiply(TAX_PERCENTAGE).setScale(2, RoundingMode.HALF_UP);
         }
-        return taxes.toString();
+        return BigDecimal.ZERO;
     }
 
-    public String getTotalPrice() {
-        return new BigDecimal(getPrice()).multiply(new BigDecimal(quantity)).toString();
+    public BigDecimal getTotalPrice() {
+        return getGrossUnitPrice().multiply(new BigDecimal(quantity));
     }
 
-    public String getTotalTaxes() {
-        return new BigDecimal(getUnitPrice()).multiply(new BigDecimal(quantity)).toString();
+    public BigDecimal getTotalTaxes() {
+        return getTaxesUnitPrice().multiply(new BigDecimal(quantity));
     }
 
-    public String getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -55,19 +53,19 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return isTaxed == item.isTaxed && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(description, item.description);
+        return isTaxed == item.isTaxed && Objects.equals(quantity, item.quantity) && Objects.equals(rawPrice, item.rawPrice) && Objects.equals(description, item.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(quantity, price, description, isTaxed);
+        return Objects.hash(quantity, rawPrice, description, isTaxed);
     }
 
     @Override
     public String toString() {
         return "Item{" +
                 "quantity='" + quantity + '\'' +
-                ", price='" + price + '\'' +
+                ", price='" + rawPrice + '\'' +
                 ", description='" + description + '\'' +
                 ", isTaxed=" + isTaxed +
                 '}';
