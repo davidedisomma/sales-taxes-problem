@@ -3,7 +3,6 @@
  */
 package org.ucieffe.kata.salestaxes;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
@@ -18,17 +17,17 @@ public class BasketTest {
 
     @Test
     public void return_zero_when_no_item() {
-        assertThat(new BigDecimal("0.00"), is(basketWith().calculateTotal().getTotal()));
+        assertThat(new BigDecimal("0.00"), is(basketWith().produceReport().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        assertThat(new BigDecimal("1.10"), is(basketWith(anExemptedItem("1.10")).calculateTotal().getTotal()));
+        assertThat(new BigDecimal("1.10"), is(basketWith(anExemptedItem("1.10")).produceReport().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_tax() {
-        assertThat(new BigDecimal("1.21"), is(basketWith(aTaxedItem("1.10")).calculateTotal().getTotal()));
+        assertThat(new BigDecimal("1.21"), is(basketWith(aTaxedItem("1.10")).produceReport().getTotal()));
     }
 
     private Item anExemptedItem(String price) {
@@ -46,7 +45,7 @@ public class BasketTest {
                 anExemptedItem("2.20"),
                 anExemptedItem("3.30")
         );
-        assertThat(new BigDecimal("6.60"), is(basketWithMultipleItems.calculateTotal().getTotal()));
+        assertThat(new BigDecimal("6.60"), is(basketWithMultipleItems.produceReport().getTotal()));
     }
 
     private Basket basketWith(Item...items) {

@@ -15,7 +15,7 @@ public class SalesTaxes {
 
     public String execute(String input) {
         Basket basket = inputParser.run(input);
-        Report report = basket.calculateTotal();
+        Report report = basket.produceReport();
 
         return deserializer.run(report);
     }

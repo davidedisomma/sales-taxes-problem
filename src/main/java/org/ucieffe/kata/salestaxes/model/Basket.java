@@ -30,7 +30,7 @@ public class Basket {
         return this;
     }
 
-    public Report calculateTotal() {
+    public Report produceReport() {
         BigDecimal total = calculateGrossPrice();
         BigDecimal taxes = calculateTaxesPrice();
         return new Report(itemList, taxes, total);
