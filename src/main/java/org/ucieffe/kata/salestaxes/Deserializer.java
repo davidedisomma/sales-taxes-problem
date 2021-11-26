@@ -9,14 +9,18 @@ public class Deserializer {
 
     public String run(Report report) {
         StringBuilder result = new StringBuilder();
-        report.getItems().stream().forEach(item -> appendItem(result, item));
+        report.getItems().forEach(item -> appendItem(result, item));
         appendSalesTaxes(result, report);
         appendTotal(result, report);
         return result.toString();
     }
 
     private void appendItem(StringBuilder result, final Item item) {
-        result.append(item.getQuantity()).append(" ").append(item.getDescription()).append(": ").append(item.getTotalPrice()).append(CARRIAGE_RETURN);
+        result.append(item.getQuantity()).append(" ");
+        if (item.isImported())
+            result.append("imported").append(" ");
+        result.append(item.getDescription()).append(": ")
+                .append(item.getTotalPrice()).append(CARRIAGE_RETURN);
     }
 
     private void appendTotal(StringBuilder result, Report report) {

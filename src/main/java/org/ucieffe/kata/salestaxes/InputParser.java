@@ -10,7 +10,8 @@ import java.util.List;
 public class InputParser {
 
     private static final String SPACE = " ";
-    private static final String AT = " at ";
+    private static final String AT_WORD = " at ";
+    public static final String IMPORTED_WORD = "imported";
 
     public Basket run(String input) {
         Basket basket = emptyBasket();
@@ -32,21 +33,28 @@ public class InputParser {
     }
 
     private Item item(String input) {
-        String quantity = getQuantityFrom(input);
-        String type = getTypeFrom(input);
-        String price = getPriceFrom(input);
-        return ItemFactory.createItemFrom(quantity, price, type);
+        String quantity = fetchQuantityFrom(input);
+        String type = fetchTypeFrom(input);
+        String price = fetchPriceFrom(input);
+
+        return ItemFactory.createItemFrom(quantity, price, type, hasImportedWord(input));
     }
 
-    private String getPriceFrom(String input) {
-        return input.substring(input.lastIndexOf(AT) + AT.length());
+    private String fetchPriceFrom(String input) {
+        return input.substring(input.lastIndexOf(AT_WORD) + AT_WORD.length());
     }
 
-    private String getTypeFrom(String input) {
-        return input.substring(input.indexOf(SPACE) + SPACE.length(), input.lastIndexOf(AT));
+    private String fetchTypeFrom(String input) {
+        if(this.hasImportedWord(input))
+            return input.substring(input.indexOf(IMPORTED_WORD) + IMPORTED_WORD.length() + SPACE.length(), input.lastIndexOf(AT_WORD));
+        return input.substring(input.indexOf(SPACE) + SPACE.length(), input.lastIndexOf(AT_WORD));
     }
 
-    private String getQuantityFrom(String input) {
+    private boolean hasImportedWord(String input) {
+        return input.contains(IMPORTED_WORD);
+    }
+
+    private String fetchQuantityFrom(String input) {
         return input.substring(0, input.indexOf(SPACE));
     }
 }

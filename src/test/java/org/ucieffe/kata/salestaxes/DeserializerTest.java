@@ -41,6 +41,20 @@ public class DeserializerTest {
     }
 
     @Test
+    public void deserialize_one_imported_item_report() {
+        Deserializer deserializer = new Deserializer();
+
+        List<Item> items = List.of(new Item(1, new BigDecimal("14.99"), "music CD", false, true));
+        String output = deserializer.run(new Report(items, new BigDecimal("1.50"), new BigDecimal("15.74")));
+
+        String expected =
+                "1 imported music CD: 15.74\n" +
+                        "Sales Taxes: 1.50\n" +
+                        "Total: 15.74";
+        assertThat(output, is(expected));
+    }
+
+    @Test
     public void deserialize_multiple_items_report() {
         Deserializer deserializer = new Deserializer();
 

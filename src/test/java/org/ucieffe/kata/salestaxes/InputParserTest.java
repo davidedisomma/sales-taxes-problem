@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class InputParserTest {
 
     @Test
-    public void returnEmptyBasket() {
+    public void return_empty_basket() {
         InputParser inputParser = new InputParser();
         Basket basket = inputParser.run("");
 
@@ -21,7 +21,7 @@ public class InputParserTest {
     }
 
     @Test
-    public void returnBasketWithOneKindOfNoTaxedItem() {
+    public void return_basket_with_one_kind_of_no_taxed_item() {
         InputParser inputParser = new InputParser();
 
         Basket basket = inputParser.run("2 book at 12.49");
@@ -31,7 +31,17 @@ public class InputParserTest {
     }
 
     @Test
-    public void returnBasketWithOneKindOfTaxedItem() {
+    public void return_basket_with_one_kind_of_imported_item() {
+        InputParser inputParser = new InputParser();
+
+        Basket basket = inputParser.run("1 imported box of chocolates at 10.00");
+
+        assertThat(basket.size(), is(1));
+        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", false, true)));
+    }
+
+    @Test
+    public void return_basket_with_one_kind_of_taxed_item() {
         InputParser inputParser = new InputParser();
 
         Basket basket = inputParser.run("1 music CD at 14.99");
@@ -41,7 +51,7 @@ public class InputParserTest {
     }
 
     @Test
-    public void returnBasketWithMoreThanOneKindOfItem() {
+    public void return_basket_with_more_than_one_kind_of_item() {
         InputParser inputParser = new InputParser();
         String input = "2 book at 12.49\n" +
                 "1 music CD at 14.99\n" +

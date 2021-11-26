@@ -17,25 +17,35 @@ public class BasketTest {
 
     @Test
     public void return_zero_when_no_item() {
-        assertThat(new BigDecimal("0.00"), is(basketWith().produceReport().getTotal()));
+        assertThat(price("0.00"), is(basketWith().produceReport().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_exemption() {
-        assertThat(new BigDecimal("1.10"), is(basketWith(anExemptedItem("1.10")).produceReport().getTotal()));
+        Basket basket = basketWith(anExemptedItem("1.10"));
+
+        assertThat(price("1.10"), is(basket.produceReport().getTotal()));
     }
 
     @Test
     public void return_item_price_when_add_one_item_with_tax() {
-        assertThat(new BigDecimal("1.21"), is(basketWith(aTaxedItem("1.10")).produceReport().getTotal()));
+        Basket basket = basketWith(aTaxedItem("1.10"));
+
+        assertThat(price("1.25"), is(basket.produceReport().getTotal()));
     }
 
-    private Item anExemptedItem(String price) {
-        return new Item(1, new BigDecimal(price), "any", false);
+    @Test
+    public void return_item_price_when_add_one_imported_item() {
+        Basket basket = basketWith(anImportedItem("1.10"));
+
+        assertThat(price("1.20"), is(basket.produceReport().getTotal()));
     }
 
-    private Item aTaxedItem(String price) {
-        return new Item(1, new BigDecimal(price), "any", true);
+    @Test
+    public void return_item_price_when_add_one_imported_and_taxed_item() {
+        Basket basket = basketWith(anImportedAndTaxedItem("1.10"));
+
+        assertThat(price("1.30"), is(basket.produceReport().getTotal()));
     }
 
     @Test
@@ -45,11 +55,31 @@ public class BasketTest {
                 anExemptedItem("2.20"),
                 anExemptedItem("3.30")
         );
-        assertThat(new BigDecimal("6.60"), is(basketWithMultipleItems.produceReport().getTotal()));
+        assertThat(price("6.60"), is(basketWithMultipleItems.produceReport().getTotal()));
     }
 
     private Basket basketWith(Item...items) {
         return new Basket(asList(items));
+    }
+
+    private Item anExemptedItem(String price) {
+        return new Item(1, price(price), "any", false);
+    }
+
+    private Item aTaxedItem(String price) {
+        return new Item(1, price(price), "any", true);
+    }
+
+    private Item anImportedItem(String price) {
+        return new Item(1, price(price), "any", false, true);
+    }
+
+    private Item anImportedAndTaxedItem(String price) {
+        return new Item(1, price(price), "any", true, true);
+    }
+
+    private BigDecimal price(String s) {
+        return new BigDecimal(s);
     }
 
 }

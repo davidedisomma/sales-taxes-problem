@@ -30,4 +30,18 @@ public class SalesTaxesAcceptanceTest {
                 "Total: 42.32";
         assertThat(output, is(expected));
     }
+
+    @Test
+    public void input2() {
+        String input = "1 imported box of chocolates at 10.00\n" +
+                "1 imported bottle of perfume at 47.50";
+
+        String output = salesTaxes.execute(input);
+
+        String expected = "1 imported box of chocolates: 10.50\n" +
+                "1 imported bottle of perfume: 54.65\n" +
+                "Sales Taxes: 7.65\n" +
+                "Total: 65.15";
+        assertThat(output, is(expected));
+    }
 }
