@@ -1,9 +1,9 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.junit.Test;
-import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 import org.ucieffe.kata.salestaxes.model.Report;
+import org.ucieffe.kata.salestaxes.model.ReportItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,7 +31,8 @@ public class DeserializerTest {
         Deserializer deserializer = new Deserializer();
 
         List<Item> items = List.of(new Item(1, new BigDecimal("14.99"), "music CD", true));
-        String output = deserializer.run(new Report(items, new BigDecimal("1.50"), new BigDecimal("16.49")));
+        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", false, new BigDecimal("16.49")));
+        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("16.49")));
 
         String expected =
                 "1 music CD: 16.49\n" +
@@ -45,7 +46,8 @@ public class DeserializerTest {
         Deserializer deserializer = new Deserializer();
 
         List<Item> items = List.of(new Item(1, new BigDecimal("14.99"), "music CD", false, true));
-        String output = deserializer.run(new Report(items, new BigDecimal("1.50"), new BigDecimal("15.74")));
+        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", true, new BigDecimal("15.74")));
+        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("15.74")));
 
         String expected =
                 "1 imported music CD: 15.74\n" +
@@ -58,12 +60,16 @@ public class DeserializerTest {
     public void deserialize_multiple_items_report() {
         Deserializer deserializer = new Deserializer();
 
-        Basket basket = new Basket();
         List<Item> items = List.of(
                 new Item(2, new BigDecimal("12.49"), "book", false),
                 new Item(1, new BigDecimal("14.99"), "music CD", true),
                 new Item(1, new BigDecimal("0.85"), "chocolate bar", false));
-        String output = deserializer.run(new Report(items, new BigDecimal("1.50"), new BigDecimal("42.32")));
+        List<ReportItem> reportItems = List.of(
+                new ReportItem(2, "book", false, new BigDecimal("24.98")),
+                new ReportItem(1, "music CD", false, new BigDecimal("16.49")),
+                new ReportItem(1, "chocolate bar", false, new BigDecimal("0.85"))
+        );
+        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("42.32")));
 
         String expected = "2 book: 24.98\n" +
                 "1 music CD: 16.49\n" +

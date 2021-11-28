@@ -6,18 +6,18 @@ import java.util.List;
 
 public class Report {
 
-    private final List<Item> items;
+    private final List<ReportItem> reportItems;
     private final BigDecimal salesTaxes;
     private final BigDecimal total;
 
-    public Report(List<Item> items, BigDecimal salesTaxes, BigDecimal total) {
-        this.items = items;
+    public Report(List<ReportItem> reportItems, BigDecimal salesTaxes, BigDecimal total) {
+        this.reportItems = reportItems;
         this.salesTaxes = salesTaxes;
         this.total = total;
     }
 
-    public List<Item> getItems() {
-        return Collections.unmodifiableList(items);
+    public List<ReportItem> getReportItems() {
+        return reportItems;
     }
 
     public BigDecimal getSalesTaxes() {

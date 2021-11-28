@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 
 public class Basket {
 
@@ -16,7 +18,7 @@ public class Basket {
         this.itemList = itemList;
     }
 
-    public Basket(Item...items) {
+    public Basket(Item... items) {
         itemList = new ArrayList<>();
         itemList.addAll(asList(items));
     }
@@ -33,7 +35,14 @@ public class Basket {
     public Report produceReport() {
         BigDecimal total = calculateGrossPrice();
         BigDecimal taxes = calculateTaxesPrice();
-        return new Report(itemList, taxes, total);
+        List<ReportItem> reportItems = itemList.stream().map(item -> new ReportItem(
+                        item.getQuantity(),
+                        item.getDescription(),
+                        item.isImported(),
+                        item.getTotalPrice()
+                )
+        ).collect(Collectors.toList());
+        return new Report(reportItems, taxes, total);
     }
 
     public BigDecimal calculateTaxesPrice() {
@@ -45,9 +54,9 @@ public class Basket {
 
     public BigDecimal calculateGrossPrice() {
         return itemList.stream()
-                    .map(Item::getTotalPrice)
-                    .reduce(BigDecimal::add)
-                    .orElse(new BigDecimal("0.00"));
+                .map(Item::getTotalPrice)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal("0.00"));
     }
 
     public Integer size() {

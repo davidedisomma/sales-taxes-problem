@@ -2,6 +2,7 @@ package org.ucieffe.kata.salestaxes;
 
 import org.ucieffe.kata.salestaxes.model.Item;
 import org.ucieffe.kata.salestaxes.model.Report;
+import org.ucieffe.kata.salestaxes.model.ReportItem;
 
 public class Deserializer {
 
@@ -9,13 +10,13 @@ public class Deserializer {
 
     public String run(Report report) {
         StringBuilder result = new StringBuilder();
-        report.getItems().forEach(item -> appendItem(result, item));
+        report.getReportItems().forEach(item -> appendItem(result, item));
         appendSalesTaxes(result, report);
         appendTotal(result, report);
         return result.toString();
     }
 
-    private void appendItem(StringBuilder result, final Item item) {
+    private void appendItem(StringBuilder result, final ReportItem item) {
         result.append(item.getQuantity()).append(" ");
         if (item.isImported())
             result.append("imported").append(" ");
