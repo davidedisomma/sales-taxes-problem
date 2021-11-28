@@ -26,7 +26,7 @@ public class Item {
         this.isImported = isImported;
     }
 
-    public BigDecimal getGrossUnitPrice() {
+    private BigDecimal getGrossUnitPrice() {
         BigDecimal taxes = getTaxesUnitPrice();
 
         return this.rawPrice.add(taxes).setScale(2, RoundingMode.HALF_UP);

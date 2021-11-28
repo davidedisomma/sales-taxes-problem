@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.ucieffe.kata.salestaxes.SemanticData.*;
 
 public class BasketTest {
 
@@ -56,30 +57,6 @@ public class BasketTest {
                 anExemptedItem("3.30")
         );
         assertThat(price("6.60"), is(basketWithMultipleItems.produceReport().getTotal()));
-    }
-
-    private Basket basketWith(Item...items) {
-        return new Basket(asList(items));
-    }
-
-    private Item anExemptedItem(String price) {
-        return new Item(1, price(price), "any", false);
-    }
-
-    private Item aTaxedItem(String price) {
-        return new Item(1, price(price), "any", true);
-    }
-
-    private Item anImportedItem(String price) {
-        return new Item(1, price(price), "any", false, true);
-    }
-
-    private Item anImportedAndTaxedItem(String price) {
-        return new Item(1, price(price), "any", true, true);
-    }
-
-    private BigDecimal price(String s) {
-        return new BigDecimal(s);
     }
 
 }
