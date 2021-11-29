@@ -1,3 +1,1 @@
-- Remove Calculator in favor of Basket
 - Replace BigDecimal with Amount
-- 
