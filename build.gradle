@@ -17,7 +17,7 @@ plugins {
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 test {
@@ -25,8 +25,6 @@ test {
 }
 
 dependencies {
-    // This dependency is found on compile classpath of this component and consumers.
-    implementation 'com.google.guava:guava:26.0-jre'
 
     // Use JUnit test framework
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
@@ -35,6 +33,3 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '2.2'
 
 }
-
-// Define the main class for the application
-mainClassName = 'org.ucieffe.kata.salestaxes.App'
