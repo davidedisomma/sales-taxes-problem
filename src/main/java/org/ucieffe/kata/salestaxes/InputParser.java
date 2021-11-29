@@ -46,7 +46,8 @@ public class InputParser {
 
     private String fetchTypeFrom(String input) {
         if(this.hasImportedWord(input))
-            return input.substring(input.indexOf(IMPORTED_WORD) + IMPORTED_WORD.length() + SPACE.length(), input.lastIndexOf(AT_WORD));
+            input = input.replace(IMPORTED_WORD + SPACE, "");
+
         return input.substring(input.indexOf(SPACE) + SPACE.length(), input.lastIndexOf(AT_WORD));
     }
 

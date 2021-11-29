@@ -3,15 +3,11 @@
  */
 package org.ucieffe.kata.salestaxes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.ucieffe.kata.salestaxes.model.Basket;
-import org.ucieffe.kata.salestaxes.model.Item;
 
-import java.math.BigDecimal;
-
-import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.ucieffe.kata.salestaxes.SemanticData.*;
 
 public class BasketTest {

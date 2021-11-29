@@ -1,6 +1,6 @@
 package org.ucieffe.kata.salestaxes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.ucieffe.kata.salestaxes.model.Item;
 import org.ucieffe.kata.salestaxes.model.Report;
 import org.ucieffe.kata.salestaxes.model.ReportItem;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DeserializerTest {
 

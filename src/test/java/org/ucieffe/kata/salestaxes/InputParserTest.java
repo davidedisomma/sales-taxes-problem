@@ -1,14 +1,15 @@
 package org.ucieffe.kata.salestaxes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InputParserTest {
 
@@ -31,10 +32,20 @@ public class InputParserTest {
     }
 
     @Test
-    public void return_basket_with_one_kind_of_imported_item() {
+    public void return_basket_when_item_has_imported_word_at_the_beginning() {
         InputParser inputParser = new InputParser();
 
         Basket basket = inputParser.run("1 imported box of chocolates at 10.00");
+
+        assertThat(basket.size(), is(1));
+        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", false, true)));
+    }
+
+    @Test
+    public void return_basket_when_item_has_imported_word_in_the_middle() {
+        InputParser inputParser = new InputParser();
+
+        Basket basket = inputParser.run("1 box of imported chocolates at 10.00");
 
         assertThat(basket.size(), is(1));
         assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", false, true)));

@@ -20,13 +20,18 @@ repositories {
     jcenter()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:26.0-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.mockito:mockito-core:4.1.0'
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '2.2'
 
 }
