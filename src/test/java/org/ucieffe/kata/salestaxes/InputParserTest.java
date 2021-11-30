@@ -28,7 +28,7 @@ public class InputParserTest {
         Basket basket = inputParser.run("2 book at 12.49");
 
         assertThat(basket.size(), is(1));
-        assertThat(basket.getItemList().get(0), is(new Item(2, new BigDecimal("12.49"), "book", false)));
+        assertThat(basket.getItemList().get(0), is(new Item(2, new BigDecimal("12.49"), "book")));
     }
 
     @Test
@@ -38,7 +38,7 @@ public class InputParserTest {
         Basket basket = inputParser.run("1 imported box of chocolates at 10.00");
 
         assertThat(basket.size(), is(1));
-        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", false, true)));
+        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", true)));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class InputParserTest {
         Basket basket = inputParser.run("1 box of imported chocolates at 10.00");
 
         assertThat(basket.size(), is(1));
-        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", false, true)));
+        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("10.00"), "box of chocolates", true)));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class InputParserTest {
         Basket basket = inputParser.run("1 music CD at 14.99");
 
         assertThat(basket.size(), is(1));
-        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("14.99"), "music CD", true)));
+        assertThat(basket.getItemList().get(0), is(new Item(1, new BigDecimal("14.99"), "music CD")));
     }
 
     @Test
@@ -72,9 +72,9 @@ public class InputParserTest {
 
         assertThat(basket.size(), is(3));
         assertThat(basket.getItemList(), contains(
-                new Item(2, new BigDecimal("12.49"), "book", false),
-                new Item(1, new BigDecimal("14.99"), "music CD", true),
-                new Item(1, new BigDecimal("0.85"), "chocolate bar", false))
+                new Item(2, new BigDecimal("12.49"), "book"),
+                new Item(1, new BigDecimal("14.99"), "music CD"),
+                new Item(1, new BigDecimal("0.85"), "chocolate bar"))
         );
     }
 }

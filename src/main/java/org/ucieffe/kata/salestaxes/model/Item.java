@@ -2,28 +2,26 @@ package org.ucieffe.kata.salestaxes.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Item {
-    private static final BigDecimal TAX_PERCENTAGE = new BigDecimal("0.1");
-    private static final BigDecimal IMPORT_TAX_PERCENTAGE = new BigDecimal("0.05");
-    public static final BigDecimal NO_TAX = BigDecimal.ZERO;
     private final Integer quantity;
     private final BigDecimal rawPrice;
     private final String description;
-    private final boolean isTaxed;
     private final boolean isImported;
+    private final SalesTaxesApplication[] salesTaxes;
 
-    public Item(Integer quantity, BigDecimal rawPrice, String description, boolean isTaxed) {
-        this(quantity, rawPrice, description, isTaxed, false);
+    public Item(Integer quantity, BigDecimal rawPrice, String description) {
+        this(quantity, rawPrice, description, false);
     }
 
-    public Item(Integer quantity, BigDecimal rawPrice, String description, boolean isTaxed, boolean isImported) {
+    public Item(Integer quantity, BigDecimal rawPrice, String description, boolean isImported, SalesTaxesApplication... salesTaxes) {
         this.quantity = quantity;
         this.rawPrice = rawPrice;
         this.description = description;
-        this.isTaxed = isTaxed;
         this.isImported = isImported;
+        this.salesTaxes = salesTaxes;
     }
 
     private BigDecimal getGrossUnitPrice() {
@@ -34,13 +32,10 @@ public class Item {
     }
 
     private BigDecimal getTaxesUnitPrice() {
-        BigDecimal taxPercentage = NO_TAX;
-        if(isTaxed) {
-            taxPercentage = taxPercentage.add(TAX_PERCENTAGE);
-        }
-        if(isImported) {
-            taxPercentage = taxPercentage.add(IMPORT_TAX_PERCENTAGE);
-        }
+        BigDecimal taxPercentage = Arrays.stream(salesTaxes)
+                .map(salesTax -> salesTax.apply(this))
+                .reduce(BigDecimal::add)
+                .orElse(SalesTaxesApplication.NO_TAX);
 
         BigDecimal taxBeforeRounding = rawPrice.multiply(taxPercentage).setScale(2, RoundingMode.HALF_UP);
         return taxBeforeRounding
@@ -72,12 +67,12 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return isTaxed == item.isTaxed && isImported == item.isImported && Objects.equals(quantity, item.quantity) && Objects.equals(rawPrice, item.rawPrice) && Objects.equals(description, item.description);
+        return isImported == item.isImported && Objects.equals(quantity, item.quantity) && Objects.equals(rawPrice, item.rawPrice) && Objects.equals(description, item.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(quantity, rawPrice, description, isTaxed, isImported);
+        return Objects.hash(quantity, rawPrice, description, isImported);
     }
 
     @Override
@@ -86,7 +81,6 @@ public class Item {
                 "quantity=" + quantity +
                 ", rawPrice=" + rawPrice +
                 ", description='" + description + '\'' +
-                ", isTaxed=" + isTaxed +
                 ", isImported=" + isImported +
                 '}';
     }
