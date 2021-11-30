@@ -14,10 +14,14 @@ public class InputParser {
     public static final String IMPORTED_WORD = "imported";
 
     public Basket run(String input) {
-        Basket basket = emptyBasket();
         if(input.isEmpty())
-            return basket;
+            return emptyBasket();
 
+        return createBasketFrom(input);
+    }
+
+    private Basket createBasketFrom(String input) {
+        Basket basket = emptyBasket();
         lines(input).stream()
                 .map(this::item)
                 .forEach(basket::add);
