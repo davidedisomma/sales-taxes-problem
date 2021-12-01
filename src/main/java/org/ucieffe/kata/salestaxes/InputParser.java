@@ -1,9 +1,11 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.ucieffe.kata.salestaxes.model.Basket;
+import org.ucieffe.kata.salestaxes.model.ImportTaxes;
 import org.ucieffe.kata.salestaxes.model.Item;
-import org.ucieffe.kata.salestaxes.model.ItemFactory;
+import org.ucieffe.kata.salestaxes.model.StandardTaxes;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class InputParser {
         String type = fetchTypeFrom(input);
         String price = fetchPriceFrom(input);
 
-        return ItemFactory.createItemFrom(quantity, price, type, hasImportedWord(input));
+        return createItemFrom(quantity, price, type, hasImportedWord(input));
     }
 
     private String fetchPriceFrom(String input) {
@@ -62,4 +64,10 @@ public class InputParser {
     private String fetchQuantityFrom(String input) {
         return input.substring(0, input.indexOf(SPACE));
     }
+
+    public Item createItemFrom(String quantity, String price, String description, boolean isImported) {
+        return Item.createItemFrom(Integer.parseInt(quantity), new BigDecimal(price), description, isImported);
+    }
+
+
 }

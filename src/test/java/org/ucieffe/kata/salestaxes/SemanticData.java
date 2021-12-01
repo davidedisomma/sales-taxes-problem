@@ -1,9 +1,7 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.ucieffe.kata.salestaxes.model.Basket;
-import org.ucieffe.kata.salestaxes.model.ImportTaxes;
 import org.ucieffe.kata.salestaxes.model.Item;
-import org.ucieffe.kata.salestaxes.model.StandardTaxes;
 
 import java.math.BigDecimal;
 
@@ -16,22 +14,22 @@ public class SemanticData {
     }
 
     public static Item anExemptedItem(String price) {
-        return new Item(1, price(price), "any");
+        return Item.createItemFrom(1, price(price), "book", false);
     }
 
     public static Item aTaxedItem(String price) {
         return aTaxedItem(price, 1);
     }
     public static Item aTaxedItem(String price, Integer quantity) {
-        return new Item(quantity, price(price), "any", false, new StandardTaxes());
+        return Item.createItemFrom(quantity, price(price), "any", false);
     }
 
     public static Item anImportedItem(String price) {
-        return new Item(1, price(price), "any", true, new ImportTaxes());
+        return Item.createItemFrom(1, price(price), "book", true);
     }
 
     public static Item anImportedAndTaxedItem(String price) {
-        return new Item(1, price(price), "any", true, new StandardTaxes(), new ImportTaxes());
+        return Item.createItemFrom(1, price(price), "any", true);
     }
 
     public static BigDecimal price(String price) {

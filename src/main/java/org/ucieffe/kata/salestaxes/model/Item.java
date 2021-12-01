@@ -12,16 +12,16 @@ public class Item {
     private final boolean isImported;
     private final SalesTaxesApplication[] salesTaxes;
 
-    public Item(Integer quantity, BigDecimal rawPrice, String description) {
-        this(quantity, rawPrice, description, false);
-    }
-
-    public Item(Integer quantity, BigDecimal rawPrice, String description, boolean isImported, SalesTaxesApplication... salesTaxes) {
+    private Item(Integer quantity, BigDecimal rawPrice, String description, boolean isImported, SalesTaxesApplication... salesTaxes) {
         this.quantity = quantity;
         this.rawPrice = rawPrice;
         this.description = description;
         this.isImported = isImported;
         this.salesTaxes = salesTaxes;
+    }
+
+    public static Item createItemFrom(Integer quantity, BigDecimal rawPrice, String description, boolean isImported) {
+        return new Item(quantity, rawPrice, description, isImported, new StandardTaxes(), new ImportTaxes());
     }
 
     private BigDecimal getGrossUnitPrice() {
