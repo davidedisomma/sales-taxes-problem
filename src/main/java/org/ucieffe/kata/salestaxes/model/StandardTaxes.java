@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class StandardTaxes implements SalesTaxesApplication{
 
-    private static final BigDecimal TAX_PERCENTAGE = new BigDecimal("0.1");
+    private static final BigDecimal TAX_PERCENTAGE = new BigDecimal("0.10");
 
     @Override
     public BigDecimal apply(Item item) {
