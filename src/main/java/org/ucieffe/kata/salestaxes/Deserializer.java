@@ -17,11 +17,11 @@ public class Deserializer {
     }
 
     private void appendItem(StringBuilder result, final ReportItem item) {
-        result.append(item.getQuantity()).append(" ");
+        result.append(item.quantity()).append(" ");
         if (item.isImported())
             result.append("imported").append(" ");
-        result.append(item.getDescription()).append(": ")
-                .append(item.getTotalPrice()).append(CARRIAGE_RETURN);
+        result.append(item.description()).append(": ")
+                .append(item.totalPrice()).append(CARRIAGE_RETURN);
     }
 
     private void appendTotal(StringBuilder result, Report report) {
