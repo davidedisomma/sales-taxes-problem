@@ -27,6 +27,14 @@ public class Price {
         return new Price(multiplication.toString());
     }
 
+    public Price apply(TaxPercentage taxPercentage) {
+        BigDecimal taxBeforeRounding = amount.multiply(taxPercentage.value()).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal taxRounded = taxBeforeRounding
+                .multiply(new BigDecimal(2)).setScale(1, RoundingMode.UP)
+                .divide(new BigDecimal(2), 2, RoundingMode.HALF_UP);
+        return new Price(taxRounded.toString());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

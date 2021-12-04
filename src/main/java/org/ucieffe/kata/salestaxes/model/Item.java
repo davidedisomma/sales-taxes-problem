@@ -33,16 +33,12 @@ public class Item {
     }
 
     private Price getTaxesUnitPrice() {
-        BigDecimal taxPercentage = Arrays.stream(salesTaxes)
+        TaxPercentage taxPercentage = Arrays.stream(salesTaxes)
                 .map(salesTax -> salesTax.apply(this))
-                .reduce(BigDecimal::add)
-                .orElse(SalesTaxesApplication.NO_TAX);
+                .reduce(TaxPercentage::add)
+                .orElse(TaxPercentage.NO_TAX);
 
-        BigDecimal taxBeforeRounding = new BigDecimal(rawPrice.getAmount()).multiply(taxPercentage).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal taxRounded = taxBeforeRounding
-                .multiply(new BigDecimal(2)).setScale(1, RoundingMode.UP)
-                .divide(new BigDecimal(2), 2, RoundingMode.HALF_UP);
-        return new Price(taxRounded.toString());
+        return rawPrice.apply(taxPercentage);
     }
 
     public Price getTotalPrice() {

@@ -1,17 +1,15 @@
 package org.ucieffe.kata.salestaxes.model;
 
-import java.math.BigDecimal;
+public class ImportTaxes implements SalesTaxesApplication {
 
-public class ImportTaxes implements SalesTaxesApplication{
-
-    private static final BigDecimal IMPORT_TAX_PERCENTAGE = new BigDecimal("0.05");
+    private static final TaxPercentage IMPORT_TAX_PERCENTAGE = new TaxPercentage(5);
 
     @Override
-    public BigDecimal apply(Item item) {
+    public TaxPercentage apply(Item item) {
         if(item.isImported()) {
             return IMPORT_TAX_PERCENTAGE;
         }
 
-        return NO_TAX;
+        return TaxPercentage.NO_TAX;
     }
 }

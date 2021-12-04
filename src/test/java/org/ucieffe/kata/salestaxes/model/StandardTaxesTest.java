@@ -12,9 +12,6 @@ import static org.hamcrest.Matchers.is;
 
 class StandardTaxesTest {
 
-    private static final BigDecimal TAX_PERCENTAGE = new BigDecimal("0.10").setScale(2, RoundingMode.HALF_UP);
-    private static final BigDecimal NO_TAX = BigDecimal.ZERO;
-
     private StandardTaxes standardTaxes;
 
     @BeforeEach
@@ -26,13 +23,13 @@ class StandardTaxesTest {
     @ValueSource(strings = {"book", "chocolate bar", "box of chocolates",
             "packet of headache pills"})
     void food_book_medical_product_are_tax_exempted(String description) {
-        assertThat(standardTaxes.apply(itemFrom(description)), is(NO_TAX));
+        assertThat(standardTaxes.apply(itemFrom(description)), is(TaxPercentage.NO_TAX));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"music CD", "bottle of perfume"})
     void other_stuffs_are_tax_applicable(String description) {
-        assertThat(standardTaxes.apply(itemFrom(description)), is(TAX_PERCENTAGE));
+        assertThat(standardTaxes.apply(itemFrom(description)), is(new TaxPercentage(10)));
     }
 
     private Item itemFrom(String good) {
