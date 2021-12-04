@@ -2,6 +2,7 @@ package org.ucieffe.kata.salestaxes;
 
 import org.ucieffe.kata.salestaxes.model.Basket;
 import org.ucieffe.kata.salestaxes.model.Item;
+import org.ucieffe.kata.salestaxes.model.Price;
 
 import java.math.BigDecimal;
 
@@ -32,8 +33,8 @@ public class SemanticData {
         return Item.createItemFrom(1, price(price), "any", true);
     }
 
-    public static BigDecimal price(String price) {
-        return new BigDecimal(price);
+    public static Price price(String price) {
+        return new Price(price);
     }
 
 }

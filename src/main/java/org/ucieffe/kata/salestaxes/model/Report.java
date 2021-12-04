@@ -7,10 +7,10 @@ import java.util.List;
 public class Report {
 
     private final List<ReportItem> reportItems;
-    private final BigDecimal salesTaxes;
-    private final BigDecimal total;
+    private final Price salesTaxes;
+    private final Price total;
 
-    public Report(List<ReportItem> reportItems, BigDecimal salesTaxes, BigDecimal total) {
+    public Report(List<ReportItem> reportItems, Price salesTaxes, Price total) {
         this.reportItems = reportItems;
         this.salesTaxes = salesTaxes;
         this.total = total;
@@ -20,11 +20,11 @@ public class Report {
         return reportItems;
     }
 
-    public BigDecimal getSalesTaxes() {
+    public Price getSalesTaxes() {
         return salesTaxes;
     }
 
-    public BigDecimal getTotal() {
+    public Price getTotal() {
         return total;
     }
 }

@@ -1,6 +1,7 @@
 package org.ucieffe.kata.salestaxes;
 
 import org.junit.jupiter.api.Test;
+import org.ucieffe.kata.salestaxes.model.Price;
 import org.ucieffe.kata.salestaxes.model.Report;
 import org.ucieffe.kata.salestaxes.model.ReportItem;
 
@@ -17,7 +18,7 @@ public class DeserializerTest {
     public void deserialize_empty_report() {
         Deserializer deserializer = new Deserializer();
 
-        String output = deserializer.run(new Report(new ArrayList<>(), new BigDecimal("0.00"), new BigDecimal("0.00")));
+        String output = deserializer.run(new Report(new ArrayList<>(), new Price("0.00"), new Price("0.00")));
 
         String expected =
                 "Sales Taxes: 0.00\n" +
@@ -29,13 +30,13 @@ public class DeserializerTest {
     public void deserialize_one_item_report() {
         Deserializer deserializer = new Deserializer();
 
-        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", false, new BigDecimal("16.49")));
-        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("16.49")));
+        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", false, new Price("16.49")));
+        String output = deserializer.run(new Report(reportItems, new Price("1.50"), new Price("16.49")));
 
-        String expected =
-                "1 music CD: 16.49\n" +
-                        "Sales Taxes: 1.50\n" +
-                        "Total: 16.49";
+        String expected = """
+                        1 music CD: 16.49
+                        Sales Taxes: 1.50
+                        Total: 16.49""";
         assertThat(output, is(expected));
     }
 
@@ -43,13 +44,13 @@ public class DeserializerTest {
     public void deserialize_one_imported_item_report() {
         Deserializer deserializer = new Deserializer();
 
-        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", true, new BigDecimal("15.74")));
-        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("15.74")));
+        List<ReportItem> reportItems = List.of(new ReportItem(1, "music CD", true, new Price("15.74")));
+        String output = deserializer.run(new Report(reportItems, new Price("1.50"), new Price("15.74")));
 
-        String expected =
-                "1 imported music CD: 15.74\n" +
-                        "Sales Taxes: 1.50\n" +
-                        "Total: 15.74";
+        String expected = """
+              1 imported music CD: 15.74
+              Sales Taxes: 1.50
+              Total: 15.74""";
         assertThat(output, is(expected));
     }
 
@@ -58,17 +59,18 @@ public class DeserializerTest {
         Deserializer deserializer = new Deserializer();
 
         List<ReportItem> reportItems = List.of(
-                new ReportItem(2, "book", false, new BigDecimal("24.98")),
-                new ReportItem(1, "music CD", false, new BigDecimal("16.49")),
-                new ReportItem(1, "chocolate bar", false, new BigDecimal("0.85"))
+                new ReportItem(2, "book", false, new Price("24.98")),
+                new ReportItem(1, "music CD", false, new Price("16.49")),
+                new ReportItem(1, "chocolate bar", false, new Price("0.85"))
         );
-        String output = deserializer.run(new Report(reportItems, new BigDecimal("1.50"), new BigDecimal("42.32")));
+        String output = deserializer.run(new Report(reportItems, new Price("1.50"), new Price("42.32")));
 
-        String expected = "2 book: 24.98\n" +
-                "1 music CD: 16.49\n" +
-                "1 chocolate bar: 0.85\n" +
-                "Sales Taxes: 1.50\n" +
-                "Total: 42.32";
+        String expected = """
+                2 book: 24.98
+                1 music CD: 16.49
+                1 chocolate bar: 0.85
+                Sales Taxes: 1.50
+                Total: 42.32""";
         assertThat(output, is(expected));
     }
 }

@@ -7,12 +7,12 @@ import java.util.Objects;
 
 public class Item {
     private final Integer quantity;
-    private final BigDecimal rawPrice;
+    private final Price rawPrice;
     private final String description;
     private final boolean isImported;
     private final SalesTaxesApplication[] salesTaxes;
 
-    private Item(Integer quantity, BigDecimal rawPrice, String description, boolean isImported, SalesTaxesApplication... salesTaxes) {
+    private Item(Integer quantity, Price rawPrice, String description, boolean isImported, SalesTaxesApplication... salesTaxes) {
         this.quantity = quantity;
         this.rawPrice = rawPrice;
         this.description = description;
@@ -20,35 +20,37 @@ public class Item {
         this.salesTaxes = salesTaxes;
     }
 
-    public static Item createItemFrom(Integer quantity, BigDecimal rawPrice, String description, boolean isImported) {
-        return new Item(quantity, rawPrice, description, isImported, new StandardTaxes(), new ImportTaxes());
+    public static Item createItemFrom(Integer quantity, Price rawPrice, String description, boolean isImported) {
+        return new Item(quantity, new Price(rawPrice.getAmount()), description, isImported, new StandardTaxes(), new ImportTaxes());
     }
 
-    private BigDecimal getGrossUnitPrice() {
-        BigDecimal taxes = getTaxesUnitPrice();
+    private Price getGrossUnitPrice() {
+        Price taxes = getTaxesUnitPrice();
 
-        return this.rawPrice.add(taxes).setScale(2, RoundingMode.HALF_UP);
+
+        return this.rawPrice.add(new Price(taxes.getAmount()));
 
     }
 
-    private BigDecimal getTaxesUnitPrice() {
+    private Price getTaxesUnitPrice() {
         BigDecimal taxPercentage = Arrays.stream(salesTaxes)
                 .map(salesTax -> salesTax.apply(this))
                 .reduce(BigDecimal::add)
                 .orElse(SalesTaxesApplication.NO_TAX);
 
-        BigDecimal taxBeforeRounding = rawPrice.multiply(taxPercentage).setScale(2, RoundingMode.HALF_UP);
-        return taxBeforeRounding
+        BigDecimal taxBeforeRounding = new BigDecimal(rawPrice.getAmount()).multiply(taxPercentage).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal taxRounded = taxBeforeRounding
                 .multiply(new BigDecimal(2)).setScale(1, RoundingMode.UP)
                 .divide(new BigDecimal(2), 2, RoundingMode.HALF_UP);
+        return new Price(taxRounded.toString());
     }
 
-    public BigDecimal getTotalPrice() {
-        return getGrossUnitPrice().multiply(new BigDecimal(quantity));
+    public Price getTotalPrice() {
+        return getGrossUnitPrice().multiply(quantity);
     }
 
-    public BigDecimal getTotalTaxes() {
-        return getTaxesUnitPrice().multiply(new BigDecimal(quantity));
+    public Price getTotalTaxes() {
+        return getTaxesUnitPrice().multiply(quantity);
     }
 
     public Integer getQuantity() {

@@ -1,9 +1,6 @@
 package org.ucieffe.kata.salestaxes;
 
-import org.ucieffe.kata.salestaxes.model.Basket;
-import org.ucieffe.kata.salestaxes.model.ImportTaxes;
-import org.ucieffe.kata.salestaxes.model.Item;
-import org.ucieffe.kata.salestaxes.model.StandardTaxes;
+import org.ucieffe.kata.salestaxes.model.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -66,7 +63,7 @@ public class InputParser {
     }
 
     public Item createItemFrom(String quantity, String price, String description, boolean isImported) {
-        return Item.createItemFrom(Integer.parseInt(quantity), new BigDecimal(price), description, isImported);
+        return Item.createItemFrom(Integer.parseInt(quantity), new Price(price), description, isImported);
     }
 
 

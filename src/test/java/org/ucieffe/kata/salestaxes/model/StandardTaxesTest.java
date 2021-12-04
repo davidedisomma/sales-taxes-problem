@@ -36,7 +36,7 @@ class StandardTaxesTest {
     }
 
     private Item itemFrom(String good) {
-        return Item.createItemFrom(1, BigDecimal.ONE, good, false);
+        return Item.createItemFrom(1, new Price("1"), good, false);
     }
 
 }

@@ -21,14 +21,14 @@ public class Deserializer {
         if (item.isImported())
             result.append("imported").append(" ");
         result.append(item.description()).append(": ")
-                .append(item.totalPrice()).append(CARRIAGE_RETURN);
+                .append(item.totalPrice().getAmount()).append(CARRIAGE_RETURN);
     }
 
     private void appendTotal(StringBuilder result, Report report) {
-        result.append("Total: ").append(report.getTotal());
+        result.append("Total: ").append(report.getTotal().getAmount());
     }
 
     private void appendSalesTaxes(StringBuilder result, Report report) {
-        result.append("Sales Taxes: ").append(report.getSalesTaxes()).append(CARRIAGE_RETURN);
+        result.append("Sales Taxes: ").append(report.getSalesTaxes().getAmount()).append(CARRIAGE_RETURN);
     }
 }
